@@ -1,37 +1,29 @@
 A Little World for Eunice ♡
-A Personal, Interactive Website Made Especially for Her
+A Personal, Interactive Website Made Especially for the Two of You
 
-The project is about developing a private website dedicated to Eunice. It will serve as a digital space where she can explore memories, read personal letters, interact with virtual flowers, play little games, and even take pictures with you through a virtual photobooth when you're physically apart.
+The project is a private online space for you and Eunice to share memories, photos, letters, and little activities, especially when you are apart.
 
 The goal is to create something meaningful, personal, and interactive—not just a website that displays pictures and messages.
 
-Let me explain what you're actually going to build.
-1. Login and Personal Welcome
-The website will have a login system because you want Eunice to have her own account.
+## Website structure
 
-When she opens the website, she'll see a personalized login page. After logging in, she'll be welcomed by a homepage designed specifically for her.
+### 1. Accounts and welcome
+There are two user accounts: yours and Eunice's. You will also have the administrator role so you can manage the website's content. Eunice can use the personal features and contribute her own memories, photos, and letters.
 
-You'll also have your own administrator account.
+After signing in, you will both arrive at the home page for your shared space.
 
-The difference is that Eunice can explore the website, while you can manage its contents.
-2. Home Dashboard
-This is the main page she'll see after logging in.
+### 2. Home
+The home page will contain a personal greeting, navigation, featured memories, random compliments, and shortcuts to other activities.
 
-It will contain a personalized greeting, navigation to different sections, featured memories, random compliments, and shortcuts to other activities.
+### 3. Our little memories
+This section is your shared digital scrapbook. Both of you can upload pictures, write descriptions, add dates, and revisit your memories.
 
-Think of it as the central location of her little world.
-3. Our Little Memories
-This section will serve as your digital scrapbook.
+For example, after a picnic together, either of you can add pictures and write about the day.
 
-You'll be able to upload pictures, write descriptions, add dates, and organize your memories.
+You can keep adding to this collection over time.
 
-For example, after having a picnic together, you can upload pictures from that day and write something about the experience.
-
-Eunice can revisit those memories whenever she wants.
-
-The purpose is to create a digital collection of moments that you don't want to forget.
-4. Letters for You
-This section will contain personal letters that you write for Eunice.
+### 4. Letters for you
+Both of you can write personal letters for the other person. Letters can appear as interactive envelopes with prompts such as:
 
 Instead of showing the letters immediately, you can present them as interactive envelopes.
 
@@ -41,31 +33,26 @@ Each envelope will have a different purpose, such as:
 - Open when you need encouragement.
 - Open when you can't sleep.
 - Open when you need a smile.
-When she clicks an envelope, it opens and reveals your message.
+When one of you opens an envelope, it reveals the letter.
 
-You can add new letters whenever you want through your administrator dashboard.
-5. A Garden for You
+### 5. A garden for you
 This section will be an interactive virtual garden.
 
 You'll create a digital garden filled with different flowers.
 
 Every flower will contain a message.
 
-For example, when Eunice clicks a sunflower, a message appears on the screen. When she clicks another flower, she'll discover a different message.
+For example, when Eunice clicks a sunflower, a message appears on the screen. Other flowers can reveal different messages.
 
 You can also add animations, butterflies, and flower-blooming effects.
 
-The purpose is to make exploring the website fun while giving her little reminders that she's appreciated.
-6. Our Little Photobooth
+The purpose is to make exploring the website fun and give Eunice little reminders that she is appreciated.
+### 6. Our little photobooth
 This is one of the most interesting features of the project.
 
-Since you and Eunice might be in different locations, you'll create a virtual photobooth where both of you can take pictures together using your own devices.
+The virtual photobooth can let the two of you take pictures together using your own devices, even when you are in different locations.
 
-Here's how it works:
-
-First, one of you creates a photobooth room. The other joins using a room code.
-
-Once connected, both of your cameras will appear on the screen. You'll be able to see each other in real time.
+One of you creates a photobooth room, and the other joins using a room code. Once connected, both cameras appear on screen.
 
 Then you can start a countdown.
 
@@ -75,89 +62,73 @@ The website will capture both of your photos and combine them into one picture.
 
 You can also choose different photo frames, add stickers, create photo strips, and save the results to your personal gallery.
 
-This feature will require additional technology called WebRTC, which allows browsers to communicate through live video.
+This feature will use WebRTC for live camera communication. Reliable use across different networks may require extra setup or a paid TURN relay.
 
-Unlike the other features, this one involves real-time communication between two users.
-7. Little Surprises
+### 7. Little surprises
 This section will make the website more entertaining.
 
 You'll create different interactive activities, including:
 - Random Compliments: A button that displays a random sweet message.
-- Mystery Gift: She clicks a virtual gift box to reveal something.
+- Mystery Gift: A member clicks a virtual gift box to reveal something.
 - Hidden Messages: Little messages hidden throughout the website.
 - Mini Quiz: Questions about your shared memories or things about you.
 - Surprise Button: A button that reveals an unexpected message or animation.
-You can regularly add new surprises through your administrator dashboard.
-8. A Special Page
+You can add new surprises through your administrator dashboard.
+### 8. A special page
 This will be the most personal section of the website.
 
-It's where you'll put a message explaining why you created this website for her.
+This page can hold a message about why you created the website for Eunice.
 
 You can include your favorite photos, a personal letter, and a special message.
 
 Unlike the other sections, this page doesn't need many interactive features.
 
-Its purpose is to give her something meaningful to read whenever she visits.
+Its purpose is to give her something meaningful to revisit.
 
-9. Your Administrator Dashboard
-Now, let's talk about your responsibility as the developer and administrator.
+### 9. Administrator dashboard
 
-You won't manually edit the website's source code every time you want to add something.
+You can manage content without editing the source code every time.
 
-Instead, you'll build an administrator dashboard where you can manage the website's contents.
-
-For example:
+The dashboard will let you:
 - Add, edit, and delete memories.
-- Upload photos.
-- Write and manage letters.
-- Add flower messages.
-- Create compliments.
-- Prepare new surprises.
-- Manage photobooth photos.
-Essentially, you'll control the content of Eunice's website through one dashboard.
+- Upload and manage photos.
+- Write and manage letters for Eunice.
+- Add flower messages, compliments, and surprises.
+- Manage saved photobooth pictures.
 
-Eunice will only have access to the features intended for her.
-10. How you're going to develop it
-You're going to build the website using the following technologies:
+Eunice can also add her own memories and photos and write letters for you. Your administrator role lets you manage all of the site's content.
 
-HTML – This will create the structure of the website, such as the homepage, login page, memories section, and photobooth interface.
+### 10. Technology and local-only operation
 
-CSS – This will control the appearance of the website. You'll use it to create the pastel pink theme, layouts, animations, and responsive designs.
+The website structure is being built with Next.js, React, TypeScript, and CSS. Supabase is the planned backend for sign-in, shared content, and private photo storage.
 
-JavaScript – This will make the website interactive. It will handle the flower animations, photo capture, countdown timers, mini-games, and other interactive features.
+The website will run on your computer only; it will not be deployed publicly. The current version is a local visual shell, so sign-in, saving, photo uploads, and the photobooth are not connected yet. Supabase is an online service, so when it is added later, the app will still need an internet connection and the data will be stored in your Supabase project.
 
-PHP – This will handle the backend operations, including login authentication, managing content, processing requests, and communicating with the database.
+WebRTC will be used later for the photobooth. No hosting provider is part of the current local-only setup.
 
-MySQL – This will store the website's information, including user accounts, memories, letters, flowers, compliments, and other records.
-
-WebRTC – This will allow you and Eunice to connect your cameras and communicate in real time for the virtual photobooth.
-11. What you're actually going to accomplish
-When the project is finished, you'll have developed a complete web application with these main components:
-1. A private user authentication system.
-2. A personalized homepage.
+### 11. What the completed website will include
+1. Private sign-in for you and Eunice, with an administrator role for you.
+2. A personalized home page.
 3. A digital scrapbook for memories.
 4. An interactive letter collection.
 5. A virtual flower garden.
 6. A real-time virtual photobooth.
 7. An interactive surprises and mini-games section.
 8. A personalized special page.
-9. An administrator dashboard for managing everything.
-The project will involve frontend development, backend programming, database management, authentication, image uploading, and real-time communication.
+9. An administrator dashboard for managing the shared content.
 
-12. The bigger picture
-I want you to understand one important thing about this project.
+### 12. The bigger picture
 
-You're not just building a website where Eunice can read your messages.
+You're building more than a website where Eunice reads your messages.
 
-You're building a website that you can continuously update as time passes.
+You're building a place where the two of you can continuously collect and share experiences.
 
 For example:
-- After your next date, you can add new pictures to the memories section.
-- When you want to tell her something, you can write a new letter.
-- When she's having a difficult day, you can add encouraging messages.
-- When you're far apart, you can open the photobooth and take pictures together.
-- When you want to surprise her, you can add something new to the website.
-The website becomes a collection of experiences that you can continue building together.
+- After your next date, you can add pictures to the memories section.
+- Either of you can write a letter for the other.
+- You can add encouraging messages and little surprises.
+- When you are far apart, you can open the photobooth and take pictures together.
+The website becomes a collection of experiences you can keep building together.
 
 My vision for the project:
 
