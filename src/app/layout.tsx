@@ -11,6 +11,8 @@ export const metadata: Metadata = {
   description: "A private little place for you and Eunice to keep your memories.",
 };
 
+export const dynamic = "force-dynamic";
+
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <html lang="en">

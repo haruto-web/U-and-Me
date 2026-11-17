@@ -1,36 +1,42 @@
-import Link from "next/link";
+import { AdminContentManager } from "@/components/admin-content-manager";
+import { requireAdmin } from "@/lib/auth";
 
-const tools = [
-  { title: "Memories", description: "Review and organize shared photos and stories.", href: "/memories", icon: "♡" },
-  { title: "Letters", description: "Prepare and manage letters for each other.", href: "/letters", icon: "✉" },
-  { title: "Garden & surprises", description: "Add kind messages and little activities.", href: "/garden", icon: "✿" },
-];
+export default async function AdminPage() {
+  const { supabase } = await requireAdmin();
+  const [{ data, error }, { data: members, error: membersError }] = await Promise.all([
+    supabase
+      .from("site_content")
+      .select("id, kind, title, body, recipient_id, prompt, event_date, created_by, created_at, updated_at")
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("profiles")
+      .select("id, email")
+      .eq("is_member", true)
+      .order("email"),
+  ]);
 
-export default function AdminPage() {
+  if (error || membersError) {
+    if (error) {
+      console.error("Could not load admin content.", error);
+    }
+    if (membersError) {
+      console.error("Could not load admin member list.", membersError);
+    }
+    throw new Error("Could not load the admin dashboard. Please try again.");
+  }
+
   return (
     <div className="page-stack">
       <section className="section-hero">
         <span className="eyebrow">JUST FOR THE ADMIN</span>
         <h2>Your little control corner.</h2>
-        <p>Manage the content for your shared space with Eunice.</p>
+        <p>Create, update, and remove shared memories, letters, garden notes, and surprises.</p>
       </section>
       <div className="admin-notice">
-        <span aria-hidden="true">ⓘ</span>
-        This preview has no sign-in or permission checks. The admin page is not private until authentication is implemented.
+        <span aria-hidden="true">✓</span>
+        Admin access is checked on the server and again by Supabase database policies.
       </div>
-      <section className="admin-grid">
-        {tools.map((tool) => (
-          <Link className="admin-tool panel" href={tool.href} key={tool.title}>
-            <span className="admin-tool-icon" aria-hidden="true">{tool.icon}</span>
-            <span>
-              <strong>{tool.title}</strong>
-              <small>{tool.description}</small>
-            </span>
-            <span className="card-arrow" aria-hidden="true">↗</span>
-          </Link>
-        ))}
-      </section>
-      <p className="preview-hint">Admin actions are visual placeholders and do not change saved content yet.</p>
+      <AdminContentManager items={data ?? []} members={members ?? []} />
     </div>
   );
 }

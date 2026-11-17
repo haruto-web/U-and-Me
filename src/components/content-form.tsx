@@ -1,6 +1,13 @@
+"use client";
+
+import { useActionState } from "react";
+import { createMemberContent, type AdminActionState } from "@/app/admin/actions";
+
 type ContentFormProps = {
   title: string;
   description: string;
+  kind: "memory" | "letter";
+  recipients?: { id: string; email: string | null }[];
   includePhoto?: boolean;
   messageLabel?: string;
 };
@@ -8,9 +15,16 @@ type ContentFormProps = {
 export function ContentForm({
   title,
   description,
+  kind,
+  recipients = [],
   includePhoto = false,
   messageLabel = "Your words",
 }: ContentFormProps) {
+  const [state, formAction, pending] = useActionState(createMemberContent, {
+    error: null,
+    success: null,
+  } satisfies AdminActionState);
+
   return (
     <div className="page-stack">
       <section className="section-hero">
@@ -18,11 +32,18 @@ export function ContentForm({
         <h2>{title}</h2>
         <p>{description}</p>
       </section>
-      <form className="panel content-form">
+      <form action={formAction} className="panel content-form">
+        <input name="kind" type="hidden" value={kind} />
         <label>
           <span>Title</span>
-          <input name="title" placeholder="Give this a little name" />
+          <input maxLength={120} name="title" placeholder="Give this a little name" required />
         </label>
+        {kind === "memory" && (
+          <label>
+            <span>When was it? (optional)</span>
+            <input name="event_date" type="date" />
+          </label>
+        )}
         {includePhoto && (
           <label>
             <span>Photo</span>
@@ -30,16 +51,37 @@ export function ContentForm({
             <small>Photo uploads will be available when storage is connected.</small>
           </label>
         )}
+        {kind === "letter" && (
+          <>
+            <label>
+              <span>Who is this letter for?</span>
+              <select defaultValue="" name="recipient_id" required>
+                <option disabled value="">Choose the other member</option>
+                {recipients.map((recipient) => (
+                  <option key={recipient.id} value={recipient.id}>
+                    {recipient.email ?? "Shared-space member"}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label>
+              <span>Envelope prompt (optional)</span>
+              <input maxLength={240} name="prompt" placeholder="Open when you need a smile..." />
+            </label>
+          </>
+        )}
         <label>
           <span>{messageLabel}</span>
-          <textarea name="message" rows={6} placeholder="Write from the heart..." />
+          <textarea maxLength={10000} name="body" rows={6} placeholder="Write from the heart..." required />
         </label>
         <div className="form-footer">
-          <span>Local preview — this form does not save yet.</span>
-          <button className="button button-primary" type="button" disabled>
-            Save for later <span aria-hidden="true">♡</span>
+          <span>Only you and the intended recipient can view private letters.</span>
+          <button className="button button-primary" type="submit" disabled={pending}>
+            {pending ? "Saving..." : "Save to our space"} <span aria-hidden="true">♡</span>
           </button>
         </div>
+        {state.error && <p className="form-error" role="alert">{state.error}</p>}
+        {state.success && <p className="form-success" role="status">{state.success}</p>}
       </form>
     </div>
   );

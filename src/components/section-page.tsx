@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 
 type SectionPageProps = {
   eyebrow: string;
@@ -9,6 +10,7 @@ type SectionPageProps = {
   actionLabel?: string;
   actionHref?: string;
   symbol?: string;
+  children?: ReactNode;
 };
 
 export function SectionPage({
@@ -20,6 +22,7 @@ export function SectionPage({
   actionLabel,
   actionHref,
   symbol = "♡",
+  children,
 }: SectionPageProps) {
   return (
     <div className="page-stack">
@@ -28,17 +31,19 @@ export function SectionPage({
         <h2>{title}</h2>
         <p>{description}</p>
       </section>
-      <section className="panel section-empty">
-        <span className="section-empty-symbol" aria-hidden="true">{symbol}</span>
-        <h3>{emptyTitle}</h3>
-        <p>{emptyDescription}</p>
-        {actionLabel && actionHref && (
-          <Link className="button button-primary" href={actionHref}>
-            {actionLabel} <span aria-hidden="true">→</span>
-          </Link>
-        )}
-        <span className="preview-hint">Preview only — content will be saved after the backend is connected.</span>
-      </section>
+      {children ?? (
+        <section className="panel section-empty">
+          <span className="section-empty-symbol" aria-hidden="true">{symbol}</span>
+          <h3>{emptyTitle}</h3>
+          <p>{emptyDescription}</p>
+          {actionLabel && actionHref && (
+            <Link className="button button-primary" href={actionHref}>
+              {actionLabel} <span aria-hidden="true">→</span>
+            </Link>
+          )}
+          <span className="preview-hint">Preview only — content will be saved after the backend is connected.</span>
+        </section>
+      )}
     </div>
   );
 }

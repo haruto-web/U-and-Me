@@ -35,22 +35,22 @@ The shared navigation and responsive layout are in `src/components/app-shell.tsx
 |---|---|
 | `/` | Welcome dashboard for you and Eunice. |
 | `/memories` | Shared scrapbook and photo memories. |
-| `/memories/new` | Add a memory form, including a photo picker placeholder. |
+| `/memories/new` | Add a shared memory. Photo uploads are not connected yet. |
 | `/letters` | Letters for the two of you. |
 | `/letters/new` | Write a letter form. |
-| `/garden` | Interactive flower-garden layout placeholder. |
-| `/surprises` | Compliments, gifts, and mini-games placeholder. |
-| `/special` | Personal page for your story and message. |
+| `/garden` | Garden messages managed through the admin page. |
+| `/surprises` | Compliments and surprises managed through the admin page. |
+| `/special` | Special-page text managed through the admin page. |
 | `/photobooth` | Later WebRTC feature placeholder. |
-| `/admin` | Admin content-management area placeholder. |
+| `/admin` | Protected admin content manager. |
 
-The routes and forms are currently for structure and visual review only. Content is not saved. The admin page is not authenticated or protected yet; do not treat it as private or put sensitive content in it.
+The protected routes, email/password sign-in, member memory/letter forms, and admin content manager are implemented against Supabase. Photo uploads are not connected yet.
 
 ## User and administrator flow
 
 ```text
 Open the site on your computer
-  → Sign in (planned)
+  → Sign in with an account created by the administrator
     → Shared home for you and Eunice
       ├── View and add memories
       ├── Upload photos
@@ -60,25 +60,25 @@ Open the site on your computer
       └── Photobooth (later)
 
 Your account
-  → Admin corner (planned)
-    → Manage memories, photos, letters, and site messages
+  → Protected admin corner
+    → Manage memories, letters, garden messages, compliments, surprises, and special-page text
 
 Eunice's account
-  → Add her own memories and photos
+  → Add memories
   → Write letters for you
   → View and interact with shared content
 ```
 
-In the connected version, both accounts can contribute memories, photos, and letters. You can manage all content through the admin area; Eunice can manage her own contributions. Access must be enforced by authentication, database policies, and private storage—not just by hiding the admin link.
+Both accounts can create memories and letters. You can manage all shared content through the protected admin area; member editing and deletion are not implemented yet. The database enforces membership, administrator rights, and letter recipients with Row Level Security—not just by hiding the admin link.
 
 ## Data and privacy plan
 
 When Supabase is connected, the initial data model should stay small:
 
 - **Profiles:** the two authenticated users and their roles; only your account is an administrator.
-- **Memories:** title, description, date, author, and photo references.
-- **Letters:** author, recipient, envelope prompt, message, and optional reveal timing.
-- **Private photos:** storage path, uploader, and memory association.
+- **Memories:** title, description, date, and author.
+- **Letters:** author, recipient account, envelope prompt, and message. Row Level Security limits reads to the author, recipient, and administrator.
+- **Private photos:** planned; storage path, uploader, and memory association.
 - **Garden messages and surprises:** content managed by you.
 - **Photobooth rooms and saved photos:** defer until the photobooth is implemented.
 
@@ -86,11 +86,11 @@ Use Row Level Security and private storage policies. Verify that only you and Eu
 
 ## Build phases
 
-1. **Website shell (current):** create the routes, navigation, responsive styling, and clearly labeled placeholder forms.
-2. **Authentication:** connect Supabase Auth for your account and Eunice's; assign the admin role securely.
-3. **Memories and photos:** implement create, view, edit, and delete flows for both users; store images privately with upload limits and validation.
-4. **Letters and admin:** let both users write for each other and give your admin account content-management controls.
-5. **Garden and surprises:** add editable messages and simple interactions.
+1. **Authentication and roles (current):** sign in through Supabase; only pre-created, enabled accounts can access the private site. Your role is assigned in trusted SQL, not from client input.
+2. **Admin content manager (current):** manage memories, letters, garden messages, compliments, surprises, and special-page text.
+3. **Member content (current):** both accounts can create memories and letters; letters are only readable by the author, recipient, and administrator.
+4. **Photos:** add private storage uploads with validation and deletion handling.
+5. **Garden and surprises:** add editable message interactions.
 6. **Photobooth:** add camera permissions, room setup, WebRTC signaling, synchronized capture, and private photo saving. A TURN relay may be needed on some networks and may cost money.
 
-Keep the running application local through these phases. Connecting Supabase still requires internet access. Review backups and Supabase free-tier limits before keeping important photos or letters there.
+Keep the running application local through these phases. Supabase still requires internet access and stores the app's account/content data remotely. Follow [SUPABASE-SETUP.md](./SUPABASE-SETUP.md) before signing in. Eunice cannot reach a `127.0.0.1` site from another device.

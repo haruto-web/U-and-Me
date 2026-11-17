@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { signOut } from "@/app/actions";
 
 const navigation = [
   { href: "/", label: "Home", icon: "⌂" },
@@ -31,11 +32,15 @@ export function AppShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const title = pageTitles[pathname] ?? "A Little World";
 
+  if (pathname === "/login") {
+    return children;
+  }
+
   return (
     <div className="app-shell">
       <aside className="sidebar">
         <Link className="brand" href="/" aria-label="A Little World home">
-          <span className="brand-mark" aria-hidden="true">♡</span>
+          <span className="brand-mark" aria-hidden="true">u&amp;e</span>
           <span className="brand-copy">
             <strong>A little world</strong>
             <small>made by us, for us</small>
@@ -84,18 +89,19 @@ export function AppShell({ children }: { children: ReactNode }) {
             <span aria-hidden="true">⚙</span>
             Admin corner
           </Link>
-          <p className="local-note">LOCAL PREVIEW · NOT SIGNED IN</p>
+          <form action={signOut}>
+            <button className="sign-out-button" type="submit">Sign out</button>
+          </form>
         </div>
       </aside>
 
       <main className="main-area">
         <header className="topbar">
           <div>
-            <span className="eyebrow">YOU & EUNICE</span>
             <h1>{title}</h1>
           </div>
           <div className="topbar-right">
-            <span className="preview-badge"><span /> Local preview</span>
+            <span className="preview-badge"><span /> Private · local</span>
             <div className="topbar-avatars" aria-label="You and Eunice">
               <span className="avatar avatar-you">Y</span>
               <span className="avatar avatar-eunice">E</span>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getSiteContent } from "@/lib/content-data";
 
 const shortcuts = [
   {
@@ -24,7 +25,14 @@ const shortcuts = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [memories, compliments] = await Promise.all([
+    getSiteContent("memory"),
+    getSiteContent("compliment"),
+  ]);
+  const latestMemory = memories[0];
+  const featuredCompliment = compliments[0];
+
   return (
     <div className="page-stack">
       <section className="welcome-card">
@@ -83,26 +91,37 @@ export default function HomePage() {
             </div>
             <Link className="text-link" href="/memories">See all <span aria-hidden="true">→</span></Link>
           </div>
-          <div className="empty-memory">
-            <span className="empty-icon" aria-hidden="true">♡</span>
-            <div>
-              <strong>Your first memory is waiting</strong>
-              <p>Save a photo and a few words to start your collection.</p>
+          {latestMemory ? (
+            <Link className="empty-memory" href="/memories">
+              <span className="empty-icon" aria-hidden="true">♡</span>
+              <div>
+                <strong>{latestMemory.title}</strong>
+                <p>{latestMemory.body}</p>
+              </div>
+              <span className="round-arrow" aria-hidden="true">↗</span>
+            </Link>
+          ) : (
+            <div className="empty-memory">
+              <span className="empty-icon" aria-hidden="true">♡</span>
+              <div>
+                <strong>Your first memory is waiting</strong>
+                <p>Save a photo and a few words to start your collection.</p>
+              </div>
+              <Link className="round-arrow" href="/memories/new" aria-label="Add the first memory">↗</Link>
             </div>
-            <Link className="round-arrow" href="/memories/new" aria-label="Add the first memory">↗</Link>
-          </div>
+          )}
         </div>
 
         <div className="note-card">
           <span className="note-decoration" aria-hidden="true">✦</span>
-          <span className="eyebrow">A LITTLE REMINDER</span>
-          <p>Even the smallest moments become something special when they&apos;re ours.</p>
-          <span className="note-signature">— for you, always <span aria-hidden="true">♡</span></span>
+          <span className="eyebrow">{featuredCompliment ? "A LITTLE COMPLIMENT" : "A LITTLE REMINDER"}</span>
+          <p>{featuredCompliment?.body ?? "Even the smallest moments become something special when they're ours."}</p>
+          <span className="note-signature">{featuredCompliment?.title ?? "— for you, always"} <span aria-hidden="true">♡</span></span>
         </div>
       </section>
 
       <div className="preview-disclaimer">
-        This is a local design preview. Sign-in, uploads, and saving content are not connected yet.
+        Memories and letters save to your private account. Photo uploads and the photobooth are not connected yet.
       </div>
     </div>
   );

@@ -1,3 +1,5 @@
+import { getSiteContent } from "@/lib/content-data";
+
 const flowers = [
   { name: "A little joy", flower: "✿", color: "flower-pink" },
   { name: "A soft reminder", flower: "❀", color: "flower-yellow" },
@@ -5,7 +7,9 @@ const flowers = [
   { name: "Just because", flower: "❀", color: "flower-peach" },
 ];
 
-export default function GardenPage() {
+export default async function GardenPage() {
+  const messages = await getSiteContent("garden_message");
+
   return (
     <div className="page-stack">
       <section className="section-hero">
@@ -14,15 +18,16 @@ export default function GardenPage() {
         <p>A small garden of kind words for the days you need one.</p>
       </section>
       <section className="flower-grid">
-        {flowers.map((item) => (
+        {flowers.map((item, index) => (
           <button className="flower-card" key={item.name} type="button" disabled>
             <span className={`flower-art ${item.color}`} aria-hidden="true">{item.flower}</span>
             <strong>{item.name}</strong>
-            <small>Messages will bloom here</small>
+            <small>{messages[index]?.title ?? "A message will bloom here"}</small>
+            {messages[index] && <span className="flower-message">{messages[index].body}</span>}
           </button>
         ))}
       </section>
-      <p className="preview-hint centered">The garden is a visual preview for now; messages and interactions will be added later.</p>
+      <p className="preview-hint centered">Flower interactions will be added in a later step.</p>
     </div>
   );
 }

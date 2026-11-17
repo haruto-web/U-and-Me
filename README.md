@@ -87,24 +87,26 @@ Its purpose is to give her something meaningful to revisit.
 
 ### 9. Administrator dashboard
 
-You can manage content without editing the source code every time.
+The protected admin corner lets you create, edit, and delete shared content without editing the source code every time.
 
 The dashboard will let you:
 - Add, edit, and delete memories.
-- Upload and manage photos.
+- Manage memory text and dates. Photo uploads are planned separately.
 - Write and manage letters for Eunice.
 - Add flower messages, compliments, and surprises.
-- Manage saved photobooth pictures.
+- Manage special-page text.
 
-Eunice can also add her own memories and photos and write letters for you. Your administrator role lets you manage all of the site's content.
+Eunice can add memories and write letters for you. Your administrator role lets you manage all shared text content. Members cannot yet edit or delete their own submissions.
 
 ### 10. Technology and local-only operation
 
-The website structure is being built with Next.js, React, TypeScript, and CSS. Supabase is the planned backend for sign-in, shared content, and private photo storage.
+The website is built with Next.js, React, TypeScript, and CSS. Supabase provides sign-in, private account roles, database policies, and shared content.
 
-The website will run on your computer only; it will not be deployed publicly. The current version is a local visual shell, so sign-in, saving, photo uploads, and the photobooth are not connected yet. Supabase is an online service, so when it is added later, the app will still need an internet connection and the data will be stored in your Supabase project.
+The website UI runs on your computer only; it will not be deployed publicly. Supabase is online, so the app requires an internet connection and stores account/content data in your Supabase project.
 
-WebRTC will be used later for the photobooth. No hosting provider is part of the current local-only setup.
+Public sign-ups are disabled; create the two accounts through Supabase Dashboard and grant your account admin access using the database setup steps. The app binds to `127.0.0.1`, which means Eunice cannot open it from her own device. Photo uploads and WebRTC will be implemented later.
+
+See [SUPABASE-SETUP.md](./SUPABASE-SETUP.md) to create the two accounts, initialize the database, and run the website.
 
 ### 11. What the completed website will include
 1. Private sign-in for you and Eunice, with an administrator role for you.
